@@ -12,7 +12,7 @@ then result a.out
 
 run 
 
-./a.out <port>
+./a.out port_number
   
 ex)  ./a.out 1234
 
