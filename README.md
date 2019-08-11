@@ -1,6 +1,6 @@
 # serv
 
-It's client/server model service project
+It's client/server model service project on the raspberry pi 4
 
 Language : C++ ( g++ )
 
