@@ -4,13 +4,13 @@ It's client/server model service project on the raspberry pi 4
 
 Language : C++ ( g++ )
 
-If you want to compile :
+If you want to compile :->
 
 g++ serv.cpp -pthread
 
 then result a.out 
 
-run serv  ( It is a Web Server )
+run serv  ( It is a Web Server ) :->
 
 ./a.out port_number
   
@@ -18,7 +18,7 @@ ex)  ./a.out 1234
 
 and use web browser.
 
-Address :
+Address :->
 
 http:// ip_address : port_number /index.html
 
