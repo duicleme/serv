@@ -6,6 +6,9 @@
 #include <sys/socket.h>
 #include <pthread.h>
 
+#include <iostream>
+#include <string>
+
 #define BUF_SIZE 1024
 #define SMALL_BUF 100
 
@@ -14,6 +17,47 @@ void send_data(FILE *fp, char *ct, char * file_name );
 char * content_type(char * file );
 void send_error(FILE *fp );
 void error_handling(char * message );
+
+void Find ( char * str, const char *old_str)
+{
+
+	int size= strlen(old_str);
+	int i,j,cnt;
+	
+	for (  i = 0; i <= strlen(str); i++ )
+	{
+		cnt = 0;
+		if ( str[i] == old_str[cnt] )
+		{
+			for (  j = 0; j <= size-1; j++ )
+			{
+				if ( str[i+j] != old_str[j] ) break;
+				str[i+j] = 'A';
+			}
+			
+			if ( j != size ) continue;
+			else {
+				str[i] = 'T';
+				str[i+size-1] = 'T';
+			}
+			
+			
+		}
+	}
+
+}
+
+
+void parser ( char * str )
+{
+	char temp[strlen(str)+1];
+	strcpy(temp, str );
+	
+	Find ( temp, "<br>");
+	
+	
+	strcpy( str,  temp);
+}
 
 int main ( int argc, char *argv[])
 {
@@ -126,6 +170,7 @@ void send_data ( FILE *fp, char * ct, char * file_name )
 	char cnt_type[SMALL_BUF];
 	char buf[BUF_SIZE];
 	FILE *send_file;
+	
 
 	sprintf(cnt_type, "Content-type:%s\r\n\r\n", ct );
 	send_file = fopen(file_name, "r");
@@ -137,12 +182,37 @@ void send_data ( FILE *fp, char * ct, char * file_name )
 	fputs(cnt_len, fp );
 	fputs(cnt_type, fp );
 
+	
+	long size;
+	fseek ( send_file, 0, SEEK_END );
+	size = ftell( send_file );
+	fseek ( send_file, 0, SEEK_SET );
+	
+	char * temp = new char[size];
+	
+	while( fgets (buf, size, send_file) != NULL) strcat (temp, buf );
+
+
+	parser ( temp );
+	
+	
+	
+	fputs(temp, fp );
+	fflush(fp );
+	
+	
+
+/*
 	while ( fgets (buf, BUF_SIZE, send_file ) != NULL )
 	{
 		fputs(buf, fp );
 		fflush(fp);
 	}
 	fflush(fp);
+*/
+	
+	
 	fclose(fp);
 
 }
+
