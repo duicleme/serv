@@ -16,7 +16,7 @@ run serv  ( It is a Web Server ) :->
   
 ex)  ./a.out 1234
 
-and use web browser.
+after use web browser.
 
 Address :->
 
